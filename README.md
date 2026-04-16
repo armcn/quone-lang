@@ -4,6 +4,10 @@ Quone is a statically typed functional language that compiles to R. If you like 
 
 Every Quone program compiles to readable, idiomatic R. No runtime. No FFI. Just `.Q` in, `.R` out.
 
+> **Note:** Quone is an early experiment built with AI-assisted coding. It may or may not continue to be developed — treat it as a proof of concept, not a production tool. Expect rough edges, missing features, and breaking changes.
+>
+> The name follows the lineage of statistical languages: S, then R (the letter before S), then Q. It's also a reference to the [Seinfeld scene](https://www.youtube.com/watch?v=8P2mBViPkHs) where Kramer plays "quone" in Scrabble — a word that doesn't exist but sounds like it should.
+
 ## Why Quone?
 
 R is powerful for data work, but dynamically typed code breaks in production. Quone catches errors at compile time while generating the same R you'd write by hand:
