@@ -1,0 +1,18 @@
+{
+  "name": "quone-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing page for the Quone programming language, built with Elm.",
+  "scripts": {
+    "build": "rm -rf dist && mkdir -p dist && elm make src/Main.elm --output=dist/main.js --optimize && cp index.html dist/index.html",
+    "build:dev": "elm make src/Main.elm --output=main.js",
+    "serve": "python3 -m http.server 8000",
+    "clean": "rm -rf dist elm-stuff"
+  },
+  "devDependencies": {
+    "elm": "^0.19.1-6"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,38 @@
+# Netlify build config for the Quone website.
+#
+# Repo layout:
+#   /                 <- this file
+#   /website/         <- Elm source + index.html
+#   /website/dist/    <- build output served by Netlify
+#
+# Connect this repo on https://app.netlify.com/start and Netlify will pick
+# up this file automatically — no fields need to be set in the UI.
+
+[build]
+  base    = "website"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Cache-bust index.html on every deploy but let the compiled JS be cached
+# (the file is rebuilt on each deploy, so a long max-age is safe).
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/main.js"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+# A few security headers that are cheap wins.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options        = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy        = "strict-origin-when-cross-origin"
+    Permissions-Policy     = "interest-cohort=()"
