@@ -15,7 +15,7 @@ import Data.List (intercalate, isPrefixOf, isInfixOf, findIndex)
 import Quone.AST.Source
 import Quone.Parse.Lexer (tokenize)
 import Quone.Parse.Parser (parseProgram)
-import Quone.Type.Type (Ty)
+import Quone.Type.Type ()
 import Quone.Type.Infer (InferState(..), inferProgram)
 import Quone.Generate.R (generate)
 import qualified Quone.Format as Fmt

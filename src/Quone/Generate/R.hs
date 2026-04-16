@@ -432,7 +432,7 @@ genMatch cg0 scrutinee arms =
             (bodyStr, cg'') = genExpr cg' body
         in (acc ++ [(conds, binds, bodyStr)], cg'')
         ) ([], cg2) arms
-      (innerCode, closed) = buildMatchCode compiled True False
+      (innerCode, _closed) = buildMatchCode compiled True False
   in ("local({\n" ++ indentLines 2 (inner0 ++ innerCode) ++ "\n})", cg3 { cgTmpCounter = cgTmpCounter cg3 })
 
 buildMatchCode :: [([String], [(String, String)], String)] -> Bool -> Bool -> (String, Bool)

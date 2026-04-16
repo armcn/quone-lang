@@ -6,7 +6,7 @@ module Quone.Type.Infer
 
 import qualified Data.Map.Strict as Map
 import qualified Data.Set as Set
-import Data.List (sortBy, find)
+import Data.List (sortBy, find, intercalate)
 import Data.Ord (comparing)
 
 import Quone.AST.Source
@@ -408,26 +408,19 @@ inferExpr s expr = case expr of
         Right (fieldTy, s2 { subst = Map.insert i rec (subst s2) })
       _ -> Left $ "Cannot access field '" ++ field ++ "' on non-record type"
 
-  EPipe left right -> do
-    let desugared = case right of
-          ECall f args -> ECall f (args ++ [left])
-          EVar _       -> ECall right [left]
-          EDplyr verb dArgs -> do
-            case inferExpr s left of
-              Right (leftTy, s1) ->
-                let resolved = apply s1 leftTy
-                in case resolved of
-                  TyRecord fields ->
-                    case checkDplyrStep s1 verb dArgs fields of
-                      Right s2 -> let resultTy = evolveDplyrSchema s2 verb dArgs fields
-                                  in return (resultTy, s2)
-                      Left e -> Left e
-                  _ -> inferExpr s1 right
-              Left e -> Left e
-          _ -> Left "Right side of |> must be a function or call"
-    case right of
-      EDplyr{} -> desugared
-      _ -> inferExpr s desugared
+  EPipe left right -> case right of
+    ECall f args -> inferExpr s (ECall f (args ++ [left]))
+    EVar _       -> inferExpr s (ECall right [left])
+    EDplyr verb dArgs -> do
+      (leftTy, s1) <- inferExpr s left
+      let resolved = apply s1 leftTy
+      case resolved of
+        TyRecord fields -> do
+          s2 <- checkDplyrStep s1 verb dArgs fields
+          let resultTy = evolveDplyrSchema s2 verb dArgs fields
+          Right (resultTy, s2)
+        _ -> inferExpr s1 right
+    _ -> Left "Right side of |> must be a function or call"
 
 isUnit :: Expr -> Bool
 isUnit EUnit = True
@@ -466,7 +459,7 @@ checkDplyrStep s0 verb args schema = do
     DplyrColumn name
       | name `elem` colNames -> Right st
       | otherwise -> Left $ "Unknown column '" ++ name ++ "' in " ++ verb ++
-                     ". Available columns: " ++ intercalate' ", " colNames
+                     ". Available columns: " ++ intercalate ", " colNames
     DplyrPred dExpr  -> inferDplyrColExpr st dExpr schema verb >> Right st
     DplyrNamed _ dExpr -> inferDplyrColExpr st dExpr schema verb >> Right st
     ) s0 args
@@ -481,9 +474,9 @@ inferDplyrColExpr s expr schema verb = case expr of
       in case resolved of
         TyFunc{} -> Right resolved
         _ -> Left $ "Unknown column '" ++ name ++ "' in " ++ verb ++
-             ". Available columns: " ++ intercalate' ", " (map fst schema)
+              ". Available columns: " ++ intercalate ", " (map fst schema)
     | otherwise -> Left $ "Unknown column '" ++ name ++ "' in " ++ verb ++
-                   ". Available columns: " ++ intercalate' ", " (map fst schema)
+                   ". Available columns: " ++ intercalate ", " (map fst schema)
   EBinary _ l r -> do
     _ <- inferDplyrColExpr s l schema verb
     _ <- inferDplyrColExpr s r schema verb

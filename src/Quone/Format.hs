@@ -5,7 +5,6 @@ module Quone.Format
 import Data.List (intercalate)
 
 import Quone.AST.Source
-import Quone.Parse.Token (Span(..))
 import Quone.Parse.Lexer (tokenize)
 import Quone.Parse.Parser (parseProgram)
 

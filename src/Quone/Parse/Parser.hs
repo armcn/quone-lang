@@ -246,11 +246,11 @@ parseTypeArgs sigLine p
 parseRecordTypeSig :: Parser -> Either String (TypeExpr, Parser)
 parseRecordTypeSig p0 = do
   p1 <- expect TLBrace p0
-  (fields, p2) <- parseRecordFields p1
+  (fields, p2) <- parseRecordFields' p1
   p3 <- expect TRBrace p2
   return (TERecord fields, p3)
   where
-    parseRecordFields px
+    parseRecordFields' px
       | peekTok px == TRBrace = return ([], px)
       | otherwise = do
           (name, px1) <- parseIdent px
@@ -263,7 +263,7 @@ parseRecordTypeSig p0 = do
           case peekTok px4 of
             TComma -> do
               let (_, px5) = advance px4
-              (rest, px6) <- parseRecordFields px5
+              (rest, px6) <- parseRecordFields' px5
               return ((name, fieldTy) : rest, px6)
             _ -> return ([(name, fieldTy)], px4)
 
