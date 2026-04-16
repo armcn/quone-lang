@@ -1,0 +1,60 @@
+{
+  "name": "quone-lang",
+  "displayName": "Quone Language",
+  "description": "Language support for Quone (.Q files) — diagnostics, formatting, and syntax highlighting",
+  "publisher": "quone",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Formatters",
+    "Linters"
+  ],
+  "activationEvents": [
+    "onLanguage:quone"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "quone",
+        "aliases": [
+          "Quone"
+        ],
+        "extensions": [
+          ".Q"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "quone",
+        "scopeName": "source.quone",
+        "path": "./syntaxes/tl.tmLanguage.json"
+      }
+    ],
+
+    "configurationDefaults": {
+      "[quone]": {
+        "editor.formatOnSave": false,
+        "editor.defaultFormatter": "quone.quone-lang"
+      }
+    },
+    "configuration": {
+      "title": "Quone",
+      "properties": {
+        "quone.lspPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the quone-lsp binary. If empty, searches PATH."
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  }
+}

@@ -34,4 +34,22 @@ executable quone
     base >= 4.14 && < 5,
     quone,
     directory,
-    filepath
+    filepath,
+    process,
+    haskeline
+
+executable quone-lsp
+  hs-source-dirs: app
+  main-is: LSP.hs
+  default-language: Haskell2010
+  default-extensions: OverloadedStrings
+  ghc-options: -Wall
+  build-depends:
+    base >= 4.14 && < 5,
+    quone,
+    lsp >= 2.4,
+    lsp-types >= 2.3,
+    text,
+    containers,
+    stm,
+    co-log-core

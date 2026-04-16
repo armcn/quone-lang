@@ -477,15 +477,67 @@ inferDplyrColExpr s expr schema verb = case expr of
               ". Available columns: " ++ intercalate ", " (map fst schema)
     | otherwise -> Left $ "Unknown column '" ++ name ++ "' in " ++ verb ++
                    ". Available columns: " ++ intercalate ", " (map fst schema)
-  EBinary _ l r -> do
-    _ <- inferDplyrColExpr s l schema verb
-    _ <- inferDplyrColExpr s r schema verb
-    Right TyBool
+  EBinary op l r -> do
+    lt <- inferDplyrColExpr s l schema verb
+    rt <- inferDplyrColExpr s r schema verb
+    let lName = exprName l
+        rName = exprName r
+        opSym = binOpSymbol op
+        numErr side name' = "Type mismatch in " ++ verb ++ ": '" ++ name' ++ "' is Character, cannot use '" ++ opSym ++ "'"
+    case op of
+      Div -> do
+        case lt of
+          TyStr -> Left $ numErr "left" lName
+          _ -> Right ()
+        case rt of
+          TyStr -> Left $ numErr "right" rName
+          _ -> Right ()
+        Right TyDouble
+      Eq -> Right TyBool; Neq -> Right TyBool
+      Gt -> Right TyBool; Lt  -> Right TyBool
+      GtEq -> Right TyBool; LtEq -> Right TyBool
+      Add -> do
+        case (lt, rt) of
+          (TyStr, _) -> Left $ numErr "left" lName
+          (_, TyStr) -> Left $ numErr "right" rName
+          _ -> Right lt
+      Sub -> do
+        case (lt, rt) of
+          (TyStr, _) -> Left $ numErr "left" lName
+          (_, TyStr) -> Left $ numErr "right" rName
+          _ -> Right lt
+      Mul -> do
+        case (lt, rt) of
+          (TyStr, _) -> Left $ numErr "left" lName
+          (_, TyStr) -> Left $ numErr "right" rName
+          _ -> Right lt
+  ECall func args -> do
+    let realArgs = filter (not . isUnit) args
+    case func of
+      EVar fname -> case lookupEnv fname s of
+        Just sc ->
+          let (ty, s') = instantiate s sc
+              resolved = apply s' ty
+          in case resolved of
+            TyFunc _ retTy -> Right (apply s' retTy)
+            _ -> Right resolved
+        Nothing -> case realArgs of
+          [a] -> inferDplyrColExpr s a schema verb
+          _   -> Right TyDouble
+      _ -> Right TyDouble
   EInt _   -> Right TyInt
   EFloat _ -> Right TyDouble
   EBool _  -> Right TyBool
   EStr _   -> Right TyStr
-  _ -> let (v, _) = fresh s in Right (TyVar v)
+  _ -> Right TyDouble
+
+exprName :: Expr -> String
+exprName (EVar n) = n
+exprName (EInt n) = show n
+exprName (EFloat f) = show f
+exprName (EBool b) = if b then "True" else "False"
+exprName (EStr s) = "\"" ++ s ++ "\""
+exprName _ = "<expr>"
 
 unwrapVector :: Ty -> Ty
 unwrapVector (TyAdt "Vector" [elem']) = elem'
@@ -503,17 +555,26 @@ evolveDplyrSchema s verb args schema = case verb of
   "filter"   -> TyRecord schema
   "mutate" ->
     let newFields = foldl (\fs arg -> case arg of
-          DplyrNamed name _ ->
-            if any (\(n, _) -> n == name) fs
-            then fs
-            else let (v, _) = fresh s in fs ++ [(name, TyVar v)]
+          DplyrNamed name dExpr ->
+            let colTy = case inferDplyrColExpr s dExpr schema verb of
+                  Right ty -> TyAdt "Vector" [ty]
+                  Left _   -> TyAdt "Vector" [TyDouble]
+            in replaceOrAdd name colTy fs
           _ -> fs
           ) schema args
     in TyRecord (sortBy (comparing fst) newFields)
   "summarize" ->
-    let fields = [let (v, _) = fresh s in (n, TyVar v) | DplyrNamed n _ <- args]
+    let fields = [(n, colTy dExpr) | DplyrNamed n dExpr <- args]
+        colTy dExpr = case inferDplyrColExpr s dExpr schema verb of
+          Right ty -> TyAdt "Vector" [ty]
+          Left _   -> TyAdt "Vector" [TyDouble]
     in TyRecord (sortBy (comparing fst) fields)
   _ -> TyRecord schema
+  where
+    replaceOrAdd name ty fs =
+      if any (\(n, _) -> n == name) fs
+      then map (\(n, t) -> if n == name then (n, ty) else (n, t)) fs
+      else fs ++ [(name, ty)]
 
 inferProgram :: InferState -> Program -> Either String ([(String, Ty)], InferState)
 inferProgram s0 prog = do
@@ -529,12 +590,19 @@ inferProgram s0 prog = do
     DeclLet ld -> do
       let (preVar, st1) = fresh st
           st2 = pushEnv (letName ld) (Scheme [] (TyVar preVar)) st1
-      (ty, st3) <- inferExpr st2 (letExpr ld)
-      st4 <- unify st3 (TyVar preVar) ty
+          wrapErr e = Left $ "In definition of '" ++ letName ld ++ "': " ++ e
+      (ty, st3) <- case inferExpr st2 (letExpr ld) of
+        Right r -> Right r
+        Left e  -> wrapErr e
+      st4 <- case unify st3 (TyVar preVar) ty of
+        Right r -> Right r
+        Left e  -> wrapErr e
       st5 <- case letAnnotation ld of
         Just ann -> do
           (annTy, st4') <- annotationToTy st4 ann
-          unify st4' ty annTy
+          case unify st4' ty annTy of
+            Right r -> Right r
+            Left e  -> wrapErr e
         Nothing -> Right st4
       let ty' = apply st5 ty
           st6 = st5 { env = init (env st5) }

@@ -1,0 +1,185 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Quone",
+  "scopeName": "source.quone",
+  "fileTypes": ["Q"],
+  "patterns": [
+    { "include": "#comments" },
+    {
+      "match": "\\b(_)\\b",
+      "name": "keyword.unused.quone"
+    },
+    { "include": "#type-declaration" },
+    { "include": "#type-signature" },
+    { "include": "#string-quote" },
+    {
+      "match": "\\b([0-9]+\\.[0-9]+)\\b",
+      "name": "constant.numeric.float.quone"
+    },
+    {
+      "match": "\\b([0-9]+)\\b",
+      "name": "constant.numeric.quone"
+    },
+    { "include": "#constructor" },
+    { "include": "#unit" },
+    { "include": "#parens" },
+    { "include": "#list-brackets" },
+    { "include": "#record-braces" },
+    { "include": "#dot" },
+    { "include": "#comma" },
+    {
+      "match": "(<-)",
+      "name": "keyword.operator.bind.quone"
+    },
+    {
+      "match": "(\\|>)",
+      "name": "keyword.operator.pipe.quone"
+    },
+    {
+      "match": "(->)",
+      "name": "keyword.operator.arrow.quone"
+    },
+    { "include": "#infix_op" },
+    {
+      "match": "(\\:|\\||\\\\)",
+      "name": "keyword.other.quone"
+    },
+    {
+      "match": "\\b(type|alias|import|package|exporting)\\b",
+      "name": "keyword.type.quone"
+    },
+    {
+      "match": "\\b(if|then|else|case|of|let|in|dataframe)\\b",
+      "name": "keyword.control.quone"
+    },
+    { "include": "#top_level_value" },
+    { "include": "#value" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "begin": "#",
+          "end": "$",
+          "name": "comment.line.hash.quone",
+          "captures": {
+            "0": { "name": "punctuation.definition.comment.quone" }
+          }
+        }
+      ]
+    },
+    "string-quote": {
+      "name": "string.quoted.double.quone",
+      "begin": "\"",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.string.begin.quone" }
+      },
+      "end": "\"",
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.string.end.quone" }
+      },
+      "patterns": [
+        {
+          "match": "\\\\[nrtv\\\\\"'&]",
+          "name": "constant.character.escape.quone"
+        }
+      ]
+    },
+    "type-declaration": {
+      "begin": "^(type\\s+)([A-Z][a-zA-Z0-9_']*)\\s+",
+      "beginCaptures": {
+        "1": { "name": "keyword.type.quone" },
+        "2": { "name": "storage.type.quone" }
+      },
+      "end": "^(?=\\S)",
+      "name": "meta.function.type-declaration.quone",
+      "patterns": [
+        {
+          "match": "(<-|\\|)\\s+([A-Z][a-zA-Z0-9_]*)\\b",
+          "captures": {
+            "1": { "name": "keyword.other.quone" },
+            "2": { "name": "constant.type-constructor.quone" }
+          }
+        },
+        {
+          "match": "<-",
+          "name": "keyword.other.quone"
+        },
+        {
+          "match": "\\b[a-z][a-zA-Z0-9_]*\\b",
+          "name": "variable.type.quone"
+        },
+        {
+          "match": "\\b[A-Z][a-zA-Z0-9_]*\\b",
+          "name": "storage.type.quone"
+        },
+        { "include": "#comments" }
+      ]
+    },
+    "type-signature": {
+      "begin": "^([a-z_][a-zA-Z0-9_']*)\\s+(\\:)",
+      "beginCaptures": {
+        "1": { "name": "entity.name.function.quone" },
+        "2": { "name": "keyword.other.colon.quone" }
+      },
+      "end": "((^(?=[a-z_]))|(^$))",
+      "name": "meta.function.type-signature.quone",
+      "patterns": [
+        {
+          "match": "->",
+          "name": "keyword.operator.arrow.quone"
+        },
+        {
+          "match": "\\b[a-z][a-zA-Z0-9_]*\\b",
+          "name": "variable.type.quone"
+        },
+        {
+          "match": "\\b[A-Z][a-zA-Z0-9_]*\\b",
+          "name": "storage.type.quone"
+        },
+        { "include": "#parens" },
+        { "include": "#comments" }
+      ]
+    },
+    "constructor": {
+      "match": "\\b[A-Z][a-zA-Z0-9_]*\\b",
+      "name": "constant.type-constructor.quone"
+    },
+    "top_level_value": {
+      "match": "^[a-z_][a-zA-Z0-9_]*\\b",
+      "name": "entity.name.function.top_level.quone"
+    },
+    "value": {
+      "match": "\\b[a-z_][a-zA-Z0-9_]*\\b",
+      "name": "meta.value.quone"
+    },
+    "unit": {
+      "match": "\\(\\)",
+      "name": "constant.unit.quone"
+    },
+    "parens": {
+      "match": "(\\(|\\))",
+      "name": "punctuation.parens.quone"
+    },
+    "list-brackets": {
+      "match": "(\\[|\\])",
+      "name": "punctuation.definition.list.quone"
+    },
+    "record-braces": {
+      "match": "(\\{|\\}|\\=)",
+      "name": "punctuation.definition.record.quone"
+    },
+    "dot": {
+      "match": "\\.",
+      "name": "keyword.operator.accessor.quone"
+    },
+    "comma": {
+      "match": "(,)",
+      "name": "punctuation.separator.comma.quone"
+    },
+    "infix_op": {
+      "match": "(==|\\+|-|\\*|/)",
+      "name": "keyword.operator.quone"
+    }
+  }
+}

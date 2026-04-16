@@ -76,6 +76,8 @@ All types correspond directly to R types:
 - [examples/option.Q](examples/option.Q) — algebraic data types and pattern matching
 - [examples/normalize.Q](examples/normalize.Q) — z-score normalization with let bindings
 - [examples/records.Q](examples/records.Q) — record types, type aliases, and field access
+- [examples/dplyr.Q](examples/dplyr.Q) — dataframe manipulation with select, filter, mutate, summarize
+- [examples/dataframe.Q](examples/dataframe.Q) — simple dataframe with vector columns
 
 ## Usage
 
