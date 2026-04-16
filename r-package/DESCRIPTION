@@ -1,0 +1,18 @@
+Package: quone
+Title: A Typed Functional Language that Compiles to R
+Version: 0.1.0
+Authors@R: person("armcn", role = c("aut", "cre"), email = "quone@example.com")
+Description: Provides an R interface to the Quone compiler, a statically typed
+    functional language with Hindley-Milner type inference that compiles to
+    idiomatic R code. Includes functions to compile, type-check, format, and
+    evaluate Quone source files, as well as an interactive REPL.
+License: MIT + file LICENSE
+URL: https://github.com/armcn/quone-lang
+BugReports: https://github.com/armcn/quone-lang/issues
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports:
+    processx
+Suggests:
+    rstudioapi

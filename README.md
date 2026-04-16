@@ -213,6 +213,22 @@ quone program.Q --package    # generate an R package
 quone repl                   # interactive REPL
 ```
 
+## R Package
+
+Use Quone directly from R without touching the command line:
+
+```r
+# install.packages("pak")
+pak::pak("armcn/quone-lang/r-package")
+quone::install_quone()
+
+quone::source_quone("analysis.Q")   # compile + evaluate
+quone::check("analysis.Q")          # type-check only
+quone::repl()                       # interactive REPL
+```
+
+See [r-package/](r-package/) for full documentation.
+
 ## Building
 
 Requires GHC and Cabal ([GHCup](https://www.haskell.org/ghcup/)).
