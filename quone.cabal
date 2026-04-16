@@ -1,0 +1,37 @@
+cabal-version: 2.4
+name:          quone
+version:       0.1.0
+synopsis:      A typed functional language that compiles to R
+license:       MIT
+build-type:    Simple
+
+library
+  hs-source-dirs: src
+  default-language: Haskell2010
+  ghc-options: -Wall
+  exposed-modules:
+    Quone
+    Quone.AST.Source
+    Quone.Parse.Token
+    Quone.Parse.Lexer
+    Quone.Parse.Parser
+    Quone.Type.Type
+    Quone.Type.Infer
+    Quone.Generate.R
+    Quone.Format
+  build-depends:
+    base >= 4.14 && < 5,
+    containers,
+    mtl,
+    text
+
+executable quone
+  hs-source-dirs: app
+  main-is: Main.hs
+  default-language: Haskell2010
+  ghc-options: -Wall
+  build-depends:
+    base >= 4.14 && < 5,
+    quone,
+    directory,
+    filepath
