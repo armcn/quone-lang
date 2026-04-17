@@ -6270,7 +6270,7 @@ var $author$project$Main$viewFooter = A2(
 												]),
 											_List_fromArray(
 												[
-													$elm$html$Html$text('q')
+													$elm$html$Html$text('Q')
 												])),
 											$elm$html$Html$text('quone')
 										])),
@@ -7085,7 +7085,7 @@ var $author$project$Main$viewHero = function (model) {
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('A typed functional language for R')
+								$elm$html$Html$text('Statically typed · compiles to R')
 							])),
 						A2(
 						$elm$html$Html$h1,
@@ -7095,7 +7095,7 @@ var $author$project$Main$viewHero = function (model) {
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('Type-safe '),
+								$elm$html$Html$text('A small '),
 								A2(
 								$elm$html$Html$span,
 								_List_fromArray(
@@ -7104,9 +7104,9 @@ var $author$project$Main$viewHero = function (model) {
 									]),
 								_List_fromArray(
 									[
-										$elm$html$Html$text('R')
+										$elm$html$Html$text('typed')
 									])),
-								$elm$html$Html$text(', from the '),
+								$elm$html$Html$text(' language for the '),
 								A2(
 								$elm$html$Html$span,
 								_List_fromArray(
@@ -7115,7 +7115,7 @@ var $author$project$Main$viewHero = function (model) {
 									]),
 								_List_fromArray(
 									[
-										$elm$html$Html$text('ground up')
+										$elm$html$Html$text('R ecosystem')
 									])),
 								$elm$html$Html$text('.')
 							])),
@@ -7451,7 +7451,7 @@ var $author$project$Main$viewInstall = A2(
 													$elm$html$Html$Attributes$href('https://github.com/armcn/quone-lang/tree/main/r-package'),
 													$elm$html$Html$Attributes$target('_blank'),
 													$elm$html$Html$Attributes$rel('noopener'),
-													A2($elm$html$Html$Attributes$style, 'color', '#f59e0b'),
+													A2($elm$html$Html$Attributes$style, 'color', '#ff8b7a'),
 													A2($elm$html$Html$Attributes$style, 'border-bottom', '1px solid rgba(245,158,11,0.4)')
 												]),
 											_List_fromArray(
@@ -7532,7 +7532,7 @@ var $author$project$Main$viewNav = A3(
 								]),
 							_List_fromArray(
 								[
-									$elm$html$Html$text('q')
+									$elm$html$Html$text('Q')
 								])),
 							$elm$html$Html$text('quone')
 						])),

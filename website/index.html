@@ -22,31 +22,65 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Double&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%236d28d9'/><text x='50%25' y='60%25' font-family='Space Grotesk,sans-serif' font-size='38' font-weight='700' fill='%23fbf8f2' text-anchor='middle'>q</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23ffffff'/><ellipse cx='32' cy='34' rx='26' ry='18' fill='%23ededed'/><text x='50%25' y='64%25' font-family='monospace' font-size='44' font-weight='700' fill='%23276dc3' text-anchor='middle' dominant-baseline='middle'>Q</text></svg>">
 
     <style>
         :root {
-            --cream: #fbf8f2;
-            --paper: #ffffff;
-            --ink: #1a1423;
-            --ink-soft: #4a3f5a;
-            --muted: #8b7f98;
-            --line: #e8e1d6;
-            --violet: #6d28d9;
-            --violet-dark: #4c1d95;
-            --violet-soft: #ede9fe;
-            --amber: #f59e0b;
-            --amber-soft: #fef3c7;
-            --coral: #f97066;
-            --teal: #14b8a6;
-            --code-bg: #1a1423;
-            --code-text: #e8e1d6;
+            /* Palette inspired by r-project.org. Clean white canvas, R-logo
+               blue as the primary accent, and a warm coral as the secondary
+               accent — together a classic split-complementary pairing used
+               in scientific data viz (think the RdBu diverging palette). */
+            --cream:       #ffffff;
+            --paper:       #fafaf9;
+            --ink:         #1a1a1a;
+            --ink-soft:    #4a4a4a;
+            --muted:       #8a8a8a;
+            --line:        #e5e5e3;
+
+            --blue:        #276dc3;
+            --blue-dark:   #1a4f8b;
+            --blue-light:  #7eb6ff;
+            --blue-soft:   #e8f0f9;
+
+            --coral:       #e0604c;
+            --coral-dark:  #b03a28;
+            --coral-light: #ff8b7a;
+            --coral-soft:  #fde4dd;
+
+            --silver:      #b5b5b5;
+            --silver-soft: #ededed;
+            --teal:        #0d9488;
+
+            --code-bg:     #161616;
+            --code-text:   #e6e6e3;
+
+            /* Syntax tokens — dark Quone panel.
+               Anchored on lighter brand colors (coral + blue), supporting
+               cool teal and warm cream so the palette reads as one family. */
+            --tok-comment-d: #6b7280;
+            --tok-keyword-d: #ff8b7a;
+            --tok-type-d:    #5eead4;
+            --tok-string-d:  #f5d28a;
+            --tok-num-d:     #c4a3ff;
+            --tok-op-d:      #ff8b7a;
+            --tok-fn-d:      #7eb6ff;
+
+            /* Syntax tokens — light R panel.
+               Same color identity as the dark theme (blue is blue, coral is
+               coral) but at darker, AA-legible saturations on white. */
+            --tok-comment-l: #8a8a8a;
+            --tok-keyword-l: #b03a28;
+            --tok-type-l:    #0d9488;
+            --tok-string-l:  #a16207;
+            --tok-num-l:     #6d28d9;
+            --tok-op-l:      #b03a28;
+            --tok-fn-l:      #1a4f8b;
 
             --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
-            --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-            --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+            --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+            --font-mono:    'JetBrains Mono', 'SF Mono', Menlo, monospace;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -61,8 +95,8 @@
             background: var(--cream);
             -webkit-font-smoothing: antialiased;
             background-image:
-                radial-gradient(1000px circle at 10% -10%, rgba(109, 40, 217, 0.06), transparent 40%),
-                radial-gradient(900px circle at 110% 10%, rgba(245, 158, 11, 0.05), transparent 45%);
+                radial-gradient(1000px circle at 10% -10%, rgba(39, 109, 195, 0.06), transparent 40%),
+                radial-gradient(900px circle at 110% 10%, rgba(224, 96, 76, 0.04), transparent 45%);
             background-attachment: fixed;
             min-height: 100vh;
         }
@@ -82,7 +116,7 @@
             z-index: 20;
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            background: rgba(251, 248, 242, 0.85);
+            background: rgba(255, 255, 255, 0.85);
             border-bottom: 1px solid transparent;
             transition: border-color 0.2s ease;
         }
@@ -100,22 +134,20 @@
             letter-spacing: -0.02em;
             color: var(--ink);
             display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            align-items: baseline;
+            gap: 8px;
+            line-height: 1;
         }
         .logo-mark {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            border-radius: 9px;
-            background: var(--violet);
-            color: var(--cream);
-            font-weight: 700;
-            font-size: 18px;
-            transform: rotate(-4deg);
-            box-shadow: 2px 2px 0 var(--amber);
+            font-family: 'Bitcount Grid Double', 'JetBrains Mono', monospace;
+            font-weight: 400;
+            font-size: 40px;
+            line-height: 0.85;
+            color: var(--blue);
+            font-feature-settings: normal;
+            letter-spacing: 0;
+            display: inline-block;
+            transform: translateY(2px);
         }
         .nav-links {
             display: flex;
@@ -128,7 +160,7 @@
             color: var(--ink-soft);
             transition: color 0.15s ease;
         }
-        .nav-links a:hover { color: var(--violet); }
+        .nav-links a:hover { color: var(--blue); }
         .nav-links a.github {
             display: inline-flex;
             align-items: center;
@@ -160,14 +192,14 @@
             font-weight: 600;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--violet);
+            color: var(--blue);
             margin-bottom: 24px;
         }
         .eyebrow::before {
             content: '';
             width: 22px;
             height: 1px;
-            background: var(--violet);
+            background: var(--blue);
         }
         h1.hero-title {
             font-family: var(--font-display);
@@ -179,9 +211,9 @@
             max-width: 20ch;
             margin-bottom: 24px;
         }
-        h1.hero-title .accent { color: var(--violet); }
+        h1.hero-title .accent { color: var(--blue); }
         h1.hero-title .underline {
-            background-image: linear-gradient(transparent 68%, rgba(245, 158, 11, 0.35) 68%, rgba(245, 158, 11, 0.35) 92%, transparent 92%);
+            background-image: linear-gradient(transparent 68%, rgba(224, 96, 76, 0.45) 68%, rgba(224, 96, 76, 0.45) 92%, transparent 92%);
             padding: 0 4px;
         }
         .hero-sub {
@@ -215,7 +247,7 @@
             color: var(--cream);
         }
         .btn-primary:hover {
-            background: var(--violet);
+            background: var(--blue);
             transform: translateY(-1px);
         }
         .btn-ghost {
@@ -236,7 +268,7 @@
             content: '';
             position: absolute;
             inset: 16px -12px -16px 12px;
-            background: linear-gradient(135deg, var(--amber), var(--coral));
+            background: linear-gradient(135deg, var(--coral), var(--coral-dark));
             border-radius: 14px;
             transform: rotate(-0.6deg);
             opacity: 0.85;
@@ -247,15 +279,15 @@
             background: var(--code-bg);
             border-radius: 14px;
             overflow: hidden;
-            box-shadow: 0 20px 60px -20px rgba(26, 20, 35, 0.4);
+            box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.4);
             z-index: 1;
         }
         .code-tabs {
             display: flex;
             gap: 2px;
             padding: 10px 10px 0 10px;
-            background: #120c1d;
-            border-bottom: 1px solid rgba(232, 225, 214, 0.08);
+            background: #0f0f0f;
+            border-bottom: 1px solid rgba(232, 232, 230, 0.08);
             align-items: center;
             justify-content: space-between;
         }
@@ -264,7 +296,7 @@
             appearance: none;
             background: transparent;
             border: 0;
-            color: rgba(232, 225, 214, 0.55);
+            color: rgba(232, 232, 230, 0.55);
             font-family: var(--font-mono);
             font-size: 12.5px;
             font-weight: 500;
@@ -285,25 +317,25 @@
             margin-right: 8px;
             font-size: 12px;
             font-weight: 500;
-            color: rgba(232, 225, 214, 0.7);
+            color: rgba(232, 232, 230, 0.7);
             cursor: pointer;
             padding: 6px 12px;
             border-radius: 999px;
-            background: rgba(232, 225, 214, 0.08);
+            background: rgba(232, 232, 230, 0.08);
             border: 0;
             font-family: var(--font-body);
             transition: all 0.15s ease;
         }
-        .output-toggle:hover { background: rgba(232, 225, 214, 0.14); color: var(--cream); }
+        .output-toggle:hover { background: rgba(232, 232, 230, 0.14); color: var(--cream); }
         .output-toggle.on {
-            background: var(--amber);
+            background: var(--coral);
             color: #1a1423;
         }
         .output-toggle .dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: var(--amber);
+            background: var(--coral);
         }
         .output-toggle.on .dot { background: #1a1423; }
 
@@ -317,13 +349,25 @@
             min-height: 280px;
         }
         .code-line { display: block; white-space: pre; min-height: 1.75em; }
-        .tok-comment { color: #7a6b89; font-style: italic; }
-        .tok-keyword { color: #c4b5fd; font-weight: 500; }
-        .tok-type    { color: #5eead4; }
-        .tok-string  { color: #fcd34d; }
-        .tok-num     { color: #fb923c; }
-        .tok-op      { color: #f472b6; }
-        .tok-fn      { color: #93c5fd; }
+
+        /* Default token palette = dark theme (Quone panel). */
+        .tok-comment { color: var(--tok-comment-d); font-style: italic; }
+        .tok-keyword { color: var(--tok-keyword-d); font-weight: 500; }
+        .tok-type    { color: var(--tok-type-d); }
+        .tok-string  { color: var(--tok-string-d); }
+        .tok-num     { color: var(--tok-num-d); }
+        .tok-op      { color: var(--tok-op-d); }
+        .tok-fn      { color: var(--tok-fn-d); }
+
+        /* Light overrides for the R panel — same color identity, darker
+           saturations so each token stays legible on the paper background. */
+        .pane.r .tok-comment { color: var(--tok-comment-l); }
+        .pane.r .tok-keyword { color: var(--tok-keyword-l); font-weight: 600; }
+        .pane.r .tok-type    { color: var(--tok-type-l); }
+        .pane.r .tok-string  { color: var(--tok-string-l); }
+        .pane.r .tok-num     { color: var(--tok-num-l); }
+        .pane.r .tok-op      { color: var(--tok-op-l); }
+        .pane.r .tok-fn      { color: var(--tok-fn-l); }
 
         /* ---------- Sections ---------- */
         .section {
@@ -335,7 +379,7 @@
             font-weight: 600;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--amber);
+            color: var(--coral);
             margin-bottom: 14px;
         }
         .section-title {
@@ -348,7 +392,7 @@
             margin-bottom: 18px;
             color: var(--ink);
         }
-        .section-title .accent { color: var(--violet); }
+        .section-title .accent { color: var(--blue); }
         .section-lede {
             font-size: 17px;
             color: var(--ink-soft);
@@ -372,21 +416,21 @@
         }
         .feature:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 40px -12px rgba(26, 20, 35, 0.12);
-            border-color: var(--violet-soft);
+            box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.12);
+            border-color: var(--blue-soft);
         }
         .feature-icon {
             width: 42px;
             height: 42px;
             border-radius: 11px;
-            background: var(--violet-soft);
+            background: var(--blue-soft);
             display: inline-flex;
             align-items: center;
             justify-content: center;
             font-family: var(--font-display);
             font-weight: 700;
             font-size: 20px;
-            color: var(--violet);
+            color: var(--blue);
             margin-bottom: 18px;
         }
         .feature h3 {
@@ -428,9 +472,9 @@
             cursor: pointer;
             transition: all 0.15s ease;
         }
-        .explorer-tab:hover { color: var(--violet); }
+        .explorer-tab:hover { color: var(--blue); }
         .explorer-tab.active {
-            background: var(--violet);
+            background: var(--blue);
             color: var(--cream);
             font-weight: 600;
         }
@@ -445,14 +489,14 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: var(--amber);
-            box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6);
+            background: var(--coral);
+            box-shadow: 0 0 0 0 rgba(224, 96, 76, 0.6);
             animation: pulse 1.8s infinite;
         }
         @keyframes pulse {
-            0%   { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.55); }
-            70%  { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+            0%   { box-shadow: 0 0 0 0 rgba(224, 96, 76, 0.55); }
+            70%  { box-shadow: 0 0 0 10px rgba(224, 96, 76, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(224, 96, 76, 0); }
         }
 
         .explorer {
@@ -498,7 +542,7 @@
             text-transform: uppercase;
             letter-spacing: 0.09em;
         }
-        .pane.quone .badge { background: var(--violet); color: var(--cream); }
+        .pane.quone .badge { background: var(--blue); color: var(--cream); }
         .pane.r .badge { background: #dbeafe; color: #1e40af; }
 
         .pane-body {
@@ -519,13 +563,13 @@
         .chunk:not(:last-child) {
             /* subtle inner rule */
         }
-        .pane.quone .chunk:hover { background: rgba(109, 40, 217, 0.14); }
-        .pane.r .chunk:hover { background: rgba(109, 40, 217, 0.06); }
+        .pane.quone .chunk:hover { background: rgba(39, 109, 195, 0.14); }
+        .pane.r .chunk:hover { background: rgba(39, 109, 195, 0.06); }
         .chunk.active {
-            border-left-color: var(--violet);
+            border-left-color: var(--blue);
         }
-        .pane.quone .chunk.active { background: rgba(109, 40, 217, 0.22); }
-        .pane.r .chunk.active { background: rgba(245, 158, 11, 0.12); border-left-color: var(--amber); }
+        .pane.quone .chunk.active { background: rgba(39, 109, 195, 0.22); }
+        .pane.r .chunk.active { background: rgba(224, 96, 76, 0.12); border-left-color: var(--coral); }
         .chunk.dimmed { opacity: 0.35; transition: opacity 0.15s ease; }
         .chunk:hover.dimmed { opacity: 1; }
 
@@ -534,8 +578,8 @@
         .explanation {
             margin-top: 20px;
             padding: 22px 26px;
-            background: var(--violet-soft);
-            border: 1px solid rgba(109, 40, 217, 0.15);
+            background: var(--blue-soft);
+            border: 1px solid rgba(39, 109, 195, 0.15);
             border-radius: 14px;
             display: flex;
             gap: 18px;
@@ -544,7 +588,7 @@
         .explanation-tag {
             flex: 0 0 auto;
             padding: 4px 10px;
-            background: var(--violet);
+            background: var(--blue);
             color: var(--cream);
             font-size: 11px;
             font-weight: 600;
@@ -563,7 +607,7 @@
             font-size: 13px;
             padding: 2px 6px;
             background: var(--paper);
-            border: 1px solid rgba(109, 40, 217, 0.2);
+            border: 1px solid rgba(39, 109, 195, 0.2);
             border-radius: 5px;
         }
 
@@ -583,12 +627,12 @@
             right: -100px;
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, var(--violet) 0%, transparent 65%);
+            background: radial-gradient(circle, var(--blue) 0%, transparent 65%);
             opacity: 0.4;
         }
         @media (max-width: 700px) { .install { padding: 44px 26px; } }
         .install-inner { position: relative; z-index: 1; max-width: 720px; }
-        .install .section-eyebrow { color: var(--amber); }
+        .install .section-eyebrow { color: var(--coral); }
         .install h2 {
             font-family: var(--font-display);
             font-size: clamp(26px, 3.4vw, 38px);
@@ -597,18 +641,18 @@
             letter-spacing: -0.02em;
             margin-bottom: 14px;
         }
-        .install h2 .accent { color: var(--amber); }
-        .install p { color: rgba(232, 225, 214, 0.72); margin-bottom: 26px; max-width: 54ch; font-size: 16px; }
+        .install h2 .accent { color: var(--coral); }
+        .install p { color: rgba(232, 232, 230, 0.72); margin-bottom: 26px; max-width: 54ch; font-size: 16px; }
         .terminal {
             background: #0a0612;
-            border: 1px solid rgba(232, 225, 214, 0.12);
+            border: 1px solid rgba(232, 232, 230, 0.12);
             border-radius: 10px;
             overflow: hidden;
             margin-bottom: 18px;
         }
         .terminal-head {
             padding: 10px 14px;
-            border-bottom: 1px solid rgba(232, 225, 214, 0.08);
+            border-bottom: 1px solid rgba(232, 232, 230, 0.08);
             display: flex;
             gap: 6px;
             align-items: center;
@@ -617,7 +661,7 @@
             width: 11px;
             height: 11px;
             border-radius: 50%;
-            background: rgba(232, 225, 214, 0.15);
+            background: rgba(232, 232, 230, 0.15);
         }
         .terminal-body {
             padding: 16px 22px;
@@ -625,9 +669,9 @@
             font-size: 13.5px;
             line-height: 1.8;
         }
-        .terminal-body .prompt { color: var(--violet); user-select: none; margin-right: 10px; }
+        .terminal-body .prompt { color: var(--blue); user-select: none; margin-right: 10px; }
         .terminal-body .cmd { color: var(--cream); }
-        .terminal-body .out { color: rgba(232, 225, 214, 0.55); display: block; }
+        .terminal-body .out { color: rgba(232, 232, 230, 0.55); display: block; }
 
         /* ---------- Quote ---------- */
         .quote {
@@ -637,8 +681,8 @@
             color: var(--ink);
             line-height: 1.5;
             padding: 22px 26px;
-            border-left: 3px solid var(--amber);
-            background: var(--amber-soft);
+            border-left: 3px solid var(--coral);
+            background: var(--coral-soft);
             border-radius: 0 10px 10px 0;
             margin: 24px 0 8px;
         }
@@ -686,7 +730,7 @@
             font-size: 14.5px;
             transition: color 0.15s ease;
         }
-        .footer-col a:hover { color: var(--violet); }
+        .footer-col a:hover { color: var(--blue); }
         .footer-col a.placeholder {
             color: var(--muted);
             cursor: help;
@@ -694,7 +738,7 @@
         .footer-col a.placeholder::after {
             content: ' · soon';
             font-size: 10.5px;
-            color: var(--amber);
+            color: var(--coral);
             font-weight: 700;
             letter-spacing: 0.06em;
             text-transform: uppercase;
@@ -711,14 +755,14 @@
             color: var(--muted);
         }
         .footer-bottom a { color: var(--ink-soft); border-bottom: 1px solid transparent; }
-        .footer-bottom a:hover { border-bottom-color: var(--violet); }
+        .footer-bottom a:hover { border-bottom-color: var(--blue); }
 
         /* ---------- Misc accents ---------- */
         .pill {
             display: inline-block;
             padding: 3px 10px;
-            background: var(--violet-soft);
-            color: var(--violet-dark);
+            background: var(--blue-soft);
+            color: var(--blue-dark);
             border-radius: 999px;
             font-size: 11px;
             font-weight: 600;
@@ -730,8 +774,8 @@
         noscript {
             display: block;
             padding: 20px;
-            background: var(--violet-soft);
-            color: var(--violet-dark);
+            background: var(--blue-soft);
+            color: var(--blue-dark);
             text-align: center;
         }
     </style>

@@ -119,7 +119,7 @@ viewNav =
         [ A.class "nav" ]
         [ div [ A.class "container nav-inner" ]
             [ a [ A.href "#top", A.class "logo" ]
-                [ span [ A.class "logo-mark" ] [ text "q" ]
+                [ span [ A.class "logo-mark" ] [ text "Q" ]
                 , text "quone"
                 ]
             , div [ A.class "nav-links" ]
@@ -161,12 +161,12 @@ viewHero model =
     section
         [ A.id "top", A.class "hero" ]
         [ div [ A.class "container" ]
-            [ div [ A.class "eyebrow" ] [ text "A typed functional language for R" ]
+            [ div [ A.class "eyebrow" ] [ text "Statically typed · compiles to R" ]
             , h1 [ A.class "hero-title" ]
-                [ text "Type-safe "
-                , span [ A.class "accent" ] [ text "R" ]
-                , text ", from the "
-                , span [ A.class "underline" ] [ text "ground up" ]
+                [ text "A small "
+                , span [ A.class "accent" ] [ text "typed" ]
+                , text " language for the "
+                , span [ A.class "underline" ] [ text "R ecosystem" ]
                 , text "."
                 ]
             , p [ A.class "hero-sub" ]
@@ -874,7 +874,7 @@ viewInstall =
                             [ A.href "https://github.com/armcn/quone-lang/tree/main/r-package"
                             , A.target "_blank"
                             , A.rel "noopener"
-                            , A.style "color" "#f59e0b"
+                            , A.style "color" "#ff8b7a"
                             , A.style "border-bottom" "1px solid rgba(245,158,11,0.4)"
                             ]
                             [ text "install the quone R package" ]
@@ -897,7 +897,7 @@ viewFooter =
             [ div [ A.class "footer-grid" ]
                 [ div [ A.class "footer-about" ]
                     [ a [ A.href "#top", A.class "logo" ]
-                        [ span [ A.class "logo-mark" ] [ text "q" ]
+                        [ span [ A.class "logo-mark" ] [ text "Q" ]
                         , text "quone"
                         ]
                     , p []
