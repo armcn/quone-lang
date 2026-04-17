@@ -103,6 +103,7 @@ view model =
         , viewHero model
         , viewFeatures
         , viewExplorer model
+        , viewComparison
         , viewQuote
         , viewInstall
         , viewFooter
@@ -790,6 +791,60 @@ rmseExample =
           }
         ]
     }
+
+
+
+-- COMPARISON
+
+
+viewComparison : Html msg
+viewComparison =
+    section [ A.class "section compare-section" ]
+        [ div [ A.class "container" ]
+            [ div [ A.class "section-eyebrow" ] [ text "How it compares" ]
+            , h2 [ A.class "section-title" ]
+                [ text "Same R ecosystem. "
+                , span [ A.class "accent" ] [ text "Stronger guarantees" ]
+                , text "."
+                ]
+            , p [ A.class "section-lede" ]
+                [ text "Quone doesn't replace R or the tidyverse — it sits beside them, the same way TypeScript sits beside JavaScript. Use the parts of R you love, and let the compiler watch the parts that bite." ]
+            , div [ A.class "compare-table-wrap" ]
+                [ node "table" [ A.class "compare-table" ]
+                    [ node "thead" []
+                        [ node "tr" []
+                            [ node "th" [] [ text "" ]
+                            , node "th" [] [ text "base R" ]
+                            , node "th" [] [ text "tidyverse" ]
+                            , node "th" [] [ text "lintr" ]
+                            , node "th" [ A.class "col-quone" ] [ text "Quone" ]
+                            ]
+                        ]
+                    , node "tbody" []
+                        [ compareRow "Column typos caught at" "runtime" "runtime" "sometimes" "compile time"
+                        , compareRow "Schema in the type system" "—" "—" "—" "yes"
+                        , compareRow "Type inference" "—" "—" "—" "Hindley-Milner"
+                        , compareRow "Pattern matching" "switch()" "case_when()" "—" "exhaustive ADTs"
+                        , compareRow "NA handling" "implicit" "implicit" "linted" "explicit Maybe"
+                        , compareRow "Refactor confidence" "low" "low" "low–medium" "high (compiler)"
+                        , compareRow "Output format" "R script" "R script" "R script" "R script"
+                        , compareRow "Something new to learn" "—" "—" "linter rules" "small language"
+                        ]
+                    ]
+                ]
+            ]
+        ]
+
+
+compareRow : String -> String -> String -> String -> String -> Html msg
+compareRow label r tv lt q =
+    node "tr" []
+        [ node "th" [ A.scope "row" ] [ text label ]
+        , node "td" [] [ text r ]
+        , node "td" [] [ text tv ]
+        , node "td" [] [ text lt ]
+        , node "td" [ A.class "col-quone" ] [ span [ A.class "compare-good" ] [ text q ] ]
+        ]
 
 
 

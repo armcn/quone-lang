@@ -5214,6 +5214,242 @@ var $author$project$Main$update = F2(
 		}
 	});
 var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$json$Json$Encode$string = _Json_wrap;
+var $elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$string(string));
+	});
+var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
+var $elm$virtual_dom$VirtualDom$node = function (tag) {
+	return _VirtualDom_node(
+		_VirtualDom_noScript(tag));
+};
+var $elm$html$Html$node = $elm$virtual_dom$VirtualDom$node;
+var $elm$html$Html$Attributes$scope = $elm$html$Html$Attributes$stringProperty('scope');
+var $elm$html$Html$span = _VirtualDom_node('span');
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $author$project$Main$compareRow = F5(
+	function (label, r, tv, lt, q) {
+		return A3(
+			$elm$html$Html$node,
+			'tr',
+			_List_Nil,
+			_List_fromArray(
+				[
+					A3(
+					$elm$html$Html$node,
+					'th',
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$scope('row')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text(label)
+						])),
+					A3(
+					$elm$html$Html$node,
+					'td',
+					_List_Nil,
+					_List_fromArray(
+						[
+							$elm$html$Html$text(r)
+						])),
+					A3(
+					$elm$html$Html$node,
+					'td',
+					_List_Nil,
+					_List_fromArray(
+						[
+							$elm$html$Html$text(tv)
+						])),
+					A3(
+					$elm$html$Html$node,
+					'td',
+					_List_Nil,
+					_List_fromArray(
+						[
+							$elm$html$Html$text(lt)
+						])),
+					A3(
+					$elm$html$Html$node,
+					'td',
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('col-quone')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$span,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('compare-good')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text(q)
+								]))
+						]))
+				]));
+	});
+var $elm$html$Html$h2 = _VirtualDom_node('h2');
+var $elm$html$Html$p = _VirtualDom_node('p');
+var $elm$html$Html$section = _VirtualDom_node('section');
+var $author$project$Main$viewComparison = A2(
+	$elm$html$Html$section,
+	_List_fromArray(
+		[
+			$elm$html$Html$Attributes$class('section compare-section')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('container')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('section-eyebrow')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('How it compares')
+						])),
+					A2(
+					$elm$html$Html$h2,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('section-title')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('Same R ecosystem. '),
+							A2(
+							$elm$html$Html$span,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('accent')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text('Stronger guarantees')
+								])),
+							$elm$html$Html$text('.')
+						])),
+					A2(
+					$elm$html$Html$p,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('section-lede')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('Quone doesn\'t replace R or the tidyverse — it sits beside them, the same way TypeScript sits beside JavaScript. Use the parts of R you love, and let the compiler watch the parts that bite.')
+						])),
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('compare-table-wrap')
+						]),
+					_List_fromArray(
+						[
+							A3(
+							$elm$html$Html$node,
+							'table',
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('compare-table')
+								]),
+							_List_fromArray(
+								[
+									A3(
+									$elm$html$Html$node,
+									'thead',
+									_List_Nil,
+									_List_fromArray(
+										[
+											A3(
+											$elm$html$Html$node,
+											'tr',
+											_List_Nil,
+											_List_fromArray(
+												[
+													A3(
+													$elm$html$Html$node,
+													'th',
+													_List_Nil,
+													_List_fromArray(
+														[
+															$elm$html$Html$text('')
+														])),
+													A3(
+													$elm$html$Html$node,
+													'th',
+													_List_Nil,
+													_List_fromArray(
+														[
+															$elm$html$Html$text('base R')
+														])),
+													A3(
+													$elm$html$Html$node,
+													'th',
+													_List_Nil,
+													_List_fromArray(
+														[
+															$elm$html$Html$text('tidyverse')
+														])),
+													A3(
+													$elm$html$Html$node,
+													'th',
+													_List_Nil,
+													_List_fromArray(
+														[
+															$elm$html$Html$text('lintr')
+														])),
+													A3(
+													$elm$html$Html$node,
+													'th',
+													_List_fromArray(
+														[
+															$elm$html$Html$Attributes$class('col-quone')
+														]),
+													_List_fromArray(
+														[
+															$elm$html$Html$text('Quone')
+														]))
+												]))
+										])),
+									A3(
+									$elm$html$Html$node,
+									'tbody',
+									_List_Nil,
+									_List_fromArray(
+										[
+											A5($author$project$Main$compareRow, 'Column typos caught at', 'runtime', 'runtime', 'sometimes', 'compile time'),
+											A5($author$project$Main$compareRow, 'Schema in the type system', '—', '—', '—', 'yes'),
+											A5($author$project$Main$compareRow, 'Type inference', '—', '—', '—', 'Hindley-Milner'),
+											A5($author$project$Main$compareRow, 'Pattern matching', 'switch()', 'case_when()', '—', 'exhaustive ADTs'),
+											A5($author$project$Main$compareRow, 'NA handling', 'implicit', 'implicit', 'linted', 'explicit Maybe'),
+											A5($author$project$Main$compareRow, 'Refactor confidence', 'low', 'low', 'low–medium', 'high (compiler)'),
+											A5($author$project$Main$compareRow, 'Output format', 'R script', 'R script', 'R script', 'R script'),
+											A5($author$project$Main$compareRow, 'Something new to learn', '—', '—', 'linter rules', 'small language')
+										]))
+								]))
+						]))
+				]))
+		]));
 var $author$project$Main$ExRmse = {$: 'ExRmse'};
 var $elm$core$List$drop = F2(
 	function (n, list) {
@@ -5262,15 +5498,6 @@ var $author$project$Main$chunkAt = F2(
 			}
 		}
 	});
-var $elm$json$Json$Encode$string = _Json_wrap;
-var $elm$html$Html$Attributes$stringProperty = F2(
-	function (key, string) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			$elm$json$Json$Encode$string(string));
-	});
-var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $author$project$Main$Fn = function (a) {
 	return {$: 'Fn', a: a};
 };
@@ -5624,8 +5851,6 @@ var $elm$html$Html$Events$onClick = function (msg) {
 		'click',
 		$elm$json$Json$Decode$succeed(msg));
 };
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $author$project$Main$exampleTab = F3(
 	function (model, id, label) {
 		var cls = _Utils_eq(model.example, id) ? 'explorer-tab active' : 'explorer-tab';
@@ -5642,11 +5867,7 @@ var $author$project$Main$exampleTab = F3(
 					$elm$html$Html$text(label)
 				]));
 	});
-var $elm$html$Html$h2 = _VirtualDom_node('h2');
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
-var $elm$html$Html$p = _VirtualDom_node('p');
-var $elm$html$Html$section = _VirtualDom_node('section');
-var $elm$html$Html$span = _VirtualDom_node('span');
 var $elm$html$Html$code = _VirtualDom_node('code');
 var $elm$core$Basics$modBy = _Basics_modBy;
 var $author$project$Main$splitOn = F2(
@@ -7472,11 +7693,6 @@ var $elm$virtual_dom$VirtualDom$attribute = F2(
 			_VirtualDom_noJavaScriptOrHtmlUri(value));
 	});
 var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
-var $elm$virtual_dom$VirtualDom$node = function (tag) {
-	return _VirtualDom_node(
-		_VirtualDom_noScript(tag));
-};
-var $elm$html$Html$node = $elm$virtual_dom$VirtualDom$node;
 var $author$project$Main$githubIcon = A3(
 	$elm$html$Html$node,
 	'svg',
@@ -7691,6 +7907,7 @@ var $author$project$Main$view = function (model) {
 				$author$project$Main$viewHero(model),
 				$author$project$Main$viewFeatures,
 				$author$project$Main$viewExplorer(model),
+				$author$project$Main$viewComparison,
 				$author$project$Main$viewQuote,
 				$author$project$Main$viewInstall,
 				$author$project$Main$viewFooter
