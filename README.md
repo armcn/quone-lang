@@ -1,3 +1,5 @@
+Project moved to https://github.com/quone-lang
+
 # Quone
 
 Quone is a statically typed functional language that compiles to R. If you like R's data ecosystem but want type safety, algebraic data types, and a clean syntax — Quone gives you that without leaving R behind.
